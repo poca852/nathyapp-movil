@@ -1,10 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthStatus, LoginResponse, User } from '../models';
 import { Observable, catchError, map, of } from 'rxjs';
 import { UtilsService } from './utils.service';
 import { NotificacionesService } from './notificaciones.service';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,8 @@ export class AuthService {
   public currentUser = computed(() => this._currentUser());
   public authStatus = computed(() => this._authStatus());
 
+  private today = moment().utc(true).format('DD/MM/YYYY')
+
   private setAuthentication(user: User, token: string): boolean {
     this._currentUser.set(user);
     this._authStatus.set(AuthStatus.authenticated);
@@ -32,7 +35,10 @@ export class AuthService {
     const url: string = `${this.baseUrl}/auth/login`;
     const body = {username, password};
 
-    return this.http.post<LoginResponse>(url, body)
+    const params = new HttpParams()
+      .append('fecha', this.today)
+
+    return this.http.post<LoginResponse>(url, body, {params})
       .pipe(
         map(({user, token}) => this.setAuthentication(user, token))
       )
@@ -67,6 +73,6 @@ export class AuthService {
     localStorage.removeItem('user');
   }
 
-  
-  
+
+
 }
