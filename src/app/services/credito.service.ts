@@ -40,7 +40,7 @@ export class CreditoService {
     this._currentCredit.set(null);
   }
 
-  getAllCreditos(): Observable<Credito[]> { 
+  getAllCreditos(): Observable<Credito[]> {
 
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${this.user().token}`);
@@ -90,7 +90,7 @@ export class CreditoService {
 
     const headers = new HttpHeaders()
       .set('authorization', `Bearer ${this.user().token}`);
-    return this.http.post<Credito>(`${this.baseUrl}/credito/`, credito, { headers })
+    return this.http.post<Credito>(`${this.baseUrl}/credito`, credito, { headers })
       .pipe(
         map((credito) => credito)
       )

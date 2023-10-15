@@ -51,7 +51,6 @@ export class RenovarPage {
 
   ionViewWillEnter() {
     this.setupFormValueChanges();
-    console.log(this.imagesCliente)
   }
 
   ionViewWillLeave() {
@@ -155,17 +154,19 @@ export class RenovarPage {
 
 
   async renovar(): Promise<void> {
-    const loading = await this.utilsSvc.loading();
-    await loading.present();
 
-    this.clienteServcie.updateClient({
-      ...this.imagesCliente,
-      ubication: await this.utilsSvc.getCurrentPosition(),
-    }).subscribe(console.log);
+
+    // this.clienteServcie.updateClient({
+    //   ...this.imagesCliente,
+    //   ubication: await this.utilsSvc.getCurrentPosition(),
+    // }).subscribe();
 
     const creditStrategy = this.form.controls.esAutomatico.value
       ? new AutomaticCreditStrategy()
       : new ManualCreditStrategy();
+
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
 
     this.creditoService.addCredito(creditStrategy.createCredit(this.form.value as NuevoCredito))
       .subscribe({
