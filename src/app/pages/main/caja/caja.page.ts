@@ -79,4 +79,30 @@ export class CajaPage implements OnInit {
       })
   }
 
+  private generarReporte(): string {
+
+    return `Ruta: ${this.caja?.ruta?.nombre}
+      Fecha: ${this.caja?.fecha}
+      Base: $.${this.caja?.base.toFixed(2)}
+      Inversion: $.${this.caja?.inversion.toFixed(2)}
+      Retiro: $.${this.caja?.retiro.toFixed(2)}
+      Gasto: $.${this.caja?.gasto.toFixed(2)}
+      Pretendido: $.${this.caja?.pretendido.toFixed(2)}
+      Extra: $.${this.caja?.extra.toFixed(2)}
+      Cobro: $.${this.caja?.cobro.toFixed(2)}
+      Prestamo: $.${this.caja?.prestamo.toFixed(2)}
+      Clientes: ${this.caja?.total_clientes}
+      Caja Final: $.${this.caja?.caja_final.toFixed(2)}
+    `
+
+  }
+
+  public async shareCaja() {
+    this.utilsSvc.share({
+      title: 'Reporte de Caja',
+      text: this.generarReporte(),
+      dialogTitle: 'Reporte de Caja',
+    })
+  }
+
 }

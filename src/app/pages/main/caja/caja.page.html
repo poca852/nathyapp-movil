@@ -1,18 +1,24 @@
 <app-header title="Caja" [showMenu]="true" />
 
 <ion-content [fullscreen]="true">
-  <ion-card 
-    mode="ios" 
-    color="primary" 
+  <ion-card
+    mode="ios"
+    color="primary"
     *ngIf="!loading"
     class="d-flex-center ion-text-center column" >
-    
+
+      <ion-button
+        class="share-caja"
+        (click)="shareCaja()">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </ion-button>
+
       <h4>Ruta: {{ caja.ruta.nombre | titlecase }}</h4>
 
       <p>Fecha: {{ caja!.fecha }}</p>
 
       <p>Base: {{ caja!.base | currency:'$' }}</p>
-    
+
       <p>Inversion: {{ caja!.inversion | currency:'$' }}</p>
 
       <p>Retiro: {{ caja!.retiro | currency:'$' }}</p>
@@ -43,8 +49,8 @@
       </ion-button>
   </ion-card>
 
-  <ion-card 
-    *ngIf="loading" 
+  <ion-card
+    *ngIf="loading"
     mode="ios">
     <ion-skeleton-text animated style="width: 100%; height: 500px;"></ion-skeleton-text>
   </ion-card>
