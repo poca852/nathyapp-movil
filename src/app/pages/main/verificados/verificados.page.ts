@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Cliente, Credito, Pago } from 'src/app/models';
 import { PagosService } from 'src/app/services/pagos.service';
@@ -7,6 +7,7 @@ import { NotificacionesService } from '../../../services/notificaciones.service'
 import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CreditoService } from 'src/app/services/credito.service';
+import { BuildComprobante } from 'src/app/helpers/get-comprobante';
 
 @Component({
   selector: 'app-verificados',
@@ -54,6 +55,15 @@ export class VerificadosPage {
     }, 1000);
   }
 
+  private async shareComprobante() {
+    const resumen = BuildComprobante.execute(this.creditoService.currentCredit(), this.clienteService.currentClient());
+    
+    await this.utilsSvc.share({
+      title: `Resumen credito de ${this.clienteService.currentClient().nombre}`,
+      text: resumen
+    })
+  }
+
   private resetComponent() {
     this.loading = true;
     this.pagos = [];
@@ -95,6 +105,13 @@ export class VerificadosPage {
           text: 'Actualizar Pago',
           handler: () => {
             this.router.navigateByUrl(`/main/update-pago`);
+          }
+        },
+        {
+          text: 'Compartir Pago',
+          icon: 'share-social',
+          handler: () => {
+            this.shareComprobante()
           }
         },
         {
