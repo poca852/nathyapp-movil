@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
@@ -7,14 +8,20 @@ import { Geolocation } from '@capacitor/geolocation';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {
+  constructor(
+    private platform: Platform,
+  ) {
     this.checkPermissions();
   }
 
   private async checkPermissions() {
-    const permission = await Geolocation.checkPermissions();
-    if (permission.location === 'prompt') {
-      await Geolocation.requestPermissions();
+
+    if(!this.platform.is('desktop')){
+      const permission = await Geolocation.checkPermissions();
+      if (permission.location === 'prompt') {
+        await Geolocation.requestPermissions();
+      }
     }
+    
   }
 }

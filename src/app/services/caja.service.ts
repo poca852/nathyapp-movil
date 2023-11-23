@@ -38,16 +38,12 @@ export class CajaService {
   closeRuta() {
 
     let ruta = this.user().ruta._id;
-    let caja = this.user().ruta.caja_actual;
+    const url = `${this.baseUrl}/ruta/close/${ruta}`;
 
     const headers = new HttpHeaders()
       .set('authorization', `Bearer ${this.user().token}`);
 
-    const params = new HttpParams()
-      .append("fecha", this.hoy)
-      .append("caja", caja as string);
-
-    return this.http.patch<boolean>(`${this.baseUrl}/ruta/close/${ruta}`, {fecha: this.hoy}, { headers, params });
+    return this.http.patch<boolean>(url, {}, { headers });
   }
 
 }

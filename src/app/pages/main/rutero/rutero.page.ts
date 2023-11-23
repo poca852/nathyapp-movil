@@ -25,21 +25,15 @@ export class RuteroPage implements OnDestroy {
   public loading = true;
   public creditosFiltrados: Credito[] = [];
   private pagoExitosoSubscription: Subscription;
-  private logoutSubscription: Subscription;
 
   constructor() {
     this.pagoExitosoSubscription = this.notificacionesSvc.pagoExitoso$.subscribe(() => {
       this.actualizarListaClientes();
     });
-
-    this.logoutSubscription = this.notificacionesSvc.logOut$.subscribe(() => {
-      this.resetComponent();
-    })
   }
 
   ngOnDestroy(): void {
     this.pagoExitosoSubscription.unsubscribe();
-    this.logoutSubscription.unsubscribe();
   }
 
   ionViewWillEnter() {
@@ -52,12 +46,6 @@ export class RuteroPage implements OnDestroy {
       this.getCreditos()
       event.target.complete();
     }, 1000);
-  }
-
-  private resetComponent() {
-    this.loading = true;
-    this.creditos = [];
-    this.creditosFiltrados = [];
   }
 
   filtrarClientes(termino: string): void {
