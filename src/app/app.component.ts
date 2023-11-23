@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,10 @@ export class AppComponent {
     private platform: Platform,
   ) {
     this.checkPermissions();
+    App.getLaunchUrl().then(resp => {
+      console.log(resp.url)
+    })
+    .catch(err => console.log(err))
   }
 
   private async checkPermissions() {
