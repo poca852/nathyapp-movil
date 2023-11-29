@@ -40,9 +40,9 @@ export class ClienteNuevoPage {
     this.form.reset();
   }
 
-  async getCurrentPosition(): Promise<[number, number]> {
-    return this.utilsSvc.getCurrentPosition();
-  }
+  // async getCurrentPosition(): Promise<[number, number]> {
+  //   return this.utilsSvc.getCurrentPosition();
+  // }
 
   setNumberInputs() {
 
@@ -106,7 +106,7 @@ export class ClienteNuevoPage {
 
     if (this.form.valid) {
 
-      this.form.controls.ubication.setValue(await this.getCurrentPosition());
+      // this.form.controls.ubication.setValue(await this.getCurrentPosition());
 
       let loading = await this.utilsSvc.loading({
         message: 'Creando cliente...'

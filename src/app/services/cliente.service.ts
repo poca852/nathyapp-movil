@@ -74,13 +74,12 @@ export class ClienteService {
 
   getClientesSinCredito(): Observable<Cliente[]> {
 
-
     const headers = new HttpHeaders()
       .set("authorization", `Bearer ${this.user().token}`);
 
     const params = new HttpParams()
-      .set("ruta", this.authService.currentUser()!.ruta._id)
-      .set("status", "false")
+      .set("idRuta", this.authService.currentUser()!.ruta._id)
+      .set("status", false)
 
     return this.http.get<Cliente[]>(`${this.baseUrl}/cliente`, { headers, params })
       .pipe(
