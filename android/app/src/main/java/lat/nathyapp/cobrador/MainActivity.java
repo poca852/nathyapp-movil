@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package lat.nathyapp.cobrador;
 
 import com.getcapacitor.BridgeActivity;
 
