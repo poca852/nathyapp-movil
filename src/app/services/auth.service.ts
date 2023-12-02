@@ -25,6 +25,9 @@ export class AuthService {
   private today = moment().utc(true).format('DD/MM/YYYY')
 
   private setAuthentication(user: User, token: string): boolean {
+
+    if(user.rol !== 'COBRADOR') return false;
+
     this._currentUser.set(user);
     this._authStatus.set(AuthStatus.authenticated);
     this.utilsSvc.saveInLocalStorage('user', {...user, token});

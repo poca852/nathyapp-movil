@@ -13,33 +13,33 @@
         <ion-icon name="share-social-outline"></ion-icon>
       </ion-button>
 
-      <h4>Ruta: {{ caja.ruta.nombre | titlecase }}</h4>
+      <h2>Ruta: {{ caja.ruta.nombre | titlecase }}</h2>
 
       <p>Fecha: {{ caja!.fecha }}</p>
 
       <p>Base: {{ caja!.base | currency:'$' }}</p>
 
-      <p>Inversion: {{ caja!.inversion | currency:'$' }}</p>
-
-      <p>Retiro: {{ caja!.retiro | currency:'$' }}</p>
-
-      <p>Gastos: {{ caja!.gasto | currency:'$' }}</p>
-
-      <p>Pretendido: {{ caja!.pretendido | currency:'$' }}</p>
-
-      <p>Extra: {{ caja!.extra | currency:'$' }}</p>
-
-      <p>Cobro: {{ caja!.cobro | currency:'$' }}</p>
-
-      <p>Prestamo: {{ caja!.prestamo | currency:'$' }}</p>
-
       <p>Clientes: {{ caja!.total_clientes }}</p>
 
       <p>Clientes Pendientes: {{ caja!.clientes_pendientes }}</p>
 
+      <p>Pretendido: {{ caja!.pretendido | currency:'$' }}</p>
+
       <p>Renovaciones: {{ caja!.renovaciones }}</p>
 
-      <p>Efectividad: {{ (caja.cobro * 100) / caja.pretendido | number:'1.2-2' }}</p>
+      <p>Cobro: {{ caja!.cobro | currency:'$' }}</p>
+
+      <p>Extra: {{ caja!.extra | currency:'$' }}</p>
+
+      <p>Prestamo: {{ caja!.prestamo | currency:'$' }}</p>
+
+      <p>Gastos: {{ caja!.gasto | currency:'$' }}</p>
+
+      <p>Inversion: {{ caja!.inversion | currency:'$' }}</p>
+
+      <p>Retiro: {{ caja!.retiro | currency:'$' }}</p>
+
+      <p>Efectividad: {{ ((caja.cobro - caja.extra) * 100) / caja.pretendido | number:'1.2-2' }}%</p>
 
       <p>Caja Final: {{ caja!.caja_final | currency:'$' }}</p>
 

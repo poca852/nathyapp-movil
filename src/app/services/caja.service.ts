@@ -16,32 +16,34 @@ export class CajaService {
   utilsSvc = inject(UtilsService);
 
   private readonly baseUrl: string = environment.baseUrl;
-  private hoy: string = moment().utc(true).format("DD/MM/YYYY")
+  private hoy: string = moment().utc(true).format("YYYY-MM-DD")
 
   constructor() { }
 
-  user(): User {
-    return this.utilsSvc.getFromLocalStorage('user');
+  get user(): User {
+    return this.utilsSvc.getFromLocalStorage('user') as User;
   }
 
   getCaja(){
 
-    const cajaActual = this.user().ruta.caja_actual;
-
     const headers = new HttpHeaders()
-      .set('authorization', `Bearer ${this.user().token}`);
+      .set('authorization', `Bearer ${this.user.token}`);
 
-    return this.http.get<Caja>(`${this.baseUrl}/caja/${cajaActual}`, { headers })
+    const params = new HttpParams()
+      .append('ruta', this.user.ruta._id)
+      .append('fecha', this.hoy)
+
+    return this.http.get<Caja>(`${this.baseUrl}/caja/current`, { headers, params })
 
   }
 
   closeRuta() {
 
-    let ruta = this.user().ruta._id;
+    let ruta = this.user.ruta._id;
     const url = `${this.baseUrl}/ruta/close/${ruta}`;
 
     const headers = new HttpHeaders()
-      .set('authorization', `Bearer ${this.user().token}`);
+      .set('authorization', `Bearer ${this.user.token}`);
 
     return this.http.patch<boolean>(url, {}, { headers });
   }

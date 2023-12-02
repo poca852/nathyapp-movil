@@ -37,21 +37,32 @@ export class AuthPage implements OnInit {
 
       this.authSvc.login(username, password).subscribe({
         next: async (isAuth) => {
-
-          let user = this.utilsSvc.getFromLocalStorage('user') as User;
-
-          this.utilsSvc.routerLink('/main/rutero');
-
+          
           await loading.dismiss();
 
-          this.utilsSvc.presentToast({
-            message: `Te damos la bienvenida ${user.nombre.toLowerCase()}`,
-            duration: 1000,
-            color: 'primary',
-            position: 'middle',
-            icon: 'person-circle-outline'
-          })
+          if(isAuth){
+            let user = this.utilsSvc.getFromLocalStorage('user') as User;
+
+            this.utilsSvc.routerLink('/main/rutero');
+
+
+            this.utilsSvc.presentToast({
+              message: `Te damos la bienvenida ${user.nombre.toLowerCase()}`,
+              duration: 1000,
+              color: 'primary',
+              position: 'middle',
+              icon: 'person-circle-outline'
+            })
+            return;
+          }
           
+          this.form.reset();
+          
+          this.utilsSvc.presentAlert({
+            header: 'Error',
+            message: 'Usted no es cobrador.',
+            buttons: ['OK']
+          })
 
         },
         error: err => {

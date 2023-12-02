@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UtilsService } from '../../services/utils.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'src/app/models';
+import { CreditoService } from '../../services/credito.service';
 
 @Component({
   selector: 'app-main',
@@ -24,6 +25,7 @@ export class MainPage implements OnInit {
   utilsSvc = inject(UtilsService);
   authSvc = inject(AuthService)
   router = inject(Router);
+  creditoSvc = inject(CreditoService);
   currentPath: string = '';
 
   ngOnInit() {
@@ -32,6 +34,10 @@ export class MainPage implements OnInit {
       if(event?.url) this.currentPath = event.url;
 
     })
+  }
+
+  ionViewWillLeave() {
+    // this.creditoSvc.
   }
 
   user(): User {

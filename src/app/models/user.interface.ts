@@ -1,9 +1,9 @@
-import { Rol, Empresa, Ruta } from "./";
+import { Empresa, Ruta } from "./";
 
 export interface User {
    _id: string;
    nombre: string;
-   rol: Rol;
+   rol: string;
    estado: boolean;
    ruta: Ruta;
    username: string;

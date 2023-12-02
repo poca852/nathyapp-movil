@@ -21,7 +21,7 @@ export class AppComponent {
 
   private async checkPermissions() {
 
-    if(!this.platform.is('desktop')){
+    if(this.platform.is('hybrid')){
       const permission = await Geolocation.checkPermissions();
       if (permission.location === 'prompt') {
         await Geolocation.requestPermissions();
