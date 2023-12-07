@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { AuthService } from './auth.service';
 import { UtilsService } from './utils.service';
 import { Caja, User } from '../models';
+import { MomentService } from './moment.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class CajaService {
   http = inject(HttpClient);
   authService = inject(AuthService);
   utilsSvc = inject(UtilsService);
+  momentSvc = inject(MomentService);
 
   private readonly baseUrl: string = environment.baseUrl;
   private hoy: string = moment().utc(true).format("YYYY-MM-DD")
@@ -45,7 +47,10 @@ export class CajaService {
     const headers = new HttpHeaders()
       .set('authorization', `Bearer ${this.user.token}`);
 
-    return this.http.patch<boolean>(url, {}, { headers });
+    const params = new HttpParams()
+      .set('fecha', this.momentSvc.now())
+
+    return this.http.patch<boolean>(url, {}, { headers, params });
   }
 
 }
